@@ -1,4 +1,4 @@
-
+//--- Impressora ---
 async function printOut_L42DT(){
     var portImpressora
     console.log("1")
@@ -8,7 +8,7 @@ async function printOut_L42DT(){
       var {usbProductId, usbVendorId} = device.getInfo()
       console.log(usbProductId)
       console.log(usbVendorId)
-      if((usbProductId == '8963') && (usbVendorId == '1659')){ //productId e vendorId da impressora
+      if((usbProductId == '8963') && (usbVendorId == '1659')){ //productId e vendorId da impressora (cei-nlad-48470)
         console.log("2")
         portImpressora = device
         
@@ -35,3 +35,4 @@ async function printOut_L42DT(){
       }
     })
   }
+  
