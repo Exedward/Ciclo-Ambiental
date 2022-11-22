@@ -83,6 +83,7 @@ async function readBalance(){
               valorReal=Number(stringValor)
               document.getElementById('valor').innerHTML = valorReal
               console.log(valorReal)
+              console.log('-------')
             }
             valueFull=""
             break//return valorReal //Retorna valor lido (number)
@@ -101,4 +102,4 @@ async function readBalance(){
   })
 }
 setInterval(readBalance, 700);
-//setInterval(printOut_L42DT, 8000);
+//setInterval(printOut_L42DT, 7000);
