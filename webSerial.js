@@ -81,6 +81,7 @@ async function readBalance(){
             if(checkSum(valueFull) == valueFull.charAt(valueFull.indexOf("\r\n")-1)){
               stringValor=valueFull.substring(valueFull.indexOf("kg")-5, valueFull.indexOf("kg"))
               valorReal=Number(stringValor)
+              document.getElementById('valor').innerHTML = valorReal
               console.log(valorReal)
             }
             valueFull=""
@@ -90,7 +91,7 @@ async function readBalance(){
       }
       if(inputStream){
         await reader.cancel()
-        await inputDone.catch(() => {valorReal})
+        await inputDone.catch(() => {})
         reader = null
         inputDone = null
         await portBalanca.close();
@@ -99,5 +100,6 @@ async function readBalance(){
     }
   })
 }
-
-setInterval(readBalance, 1000);
+document.getElementById('valor')
+setInterval(readBalance, 700);
+//setInterval(printOut_L42DT, 8000);
