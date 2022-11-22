@@ -36,8 +36,8 @@ async function printOut_L42DT(){
     })
 }
 
-var inputDone = null, reader = null, inputStream = null, portBalanca
 //---- Balanca ----
+var inputDone = null, reader = null, inputStream = null, portBalanca
 async function readBalance(){
   portOpen = false
   const ports = await navigator.serial.getPorts();
