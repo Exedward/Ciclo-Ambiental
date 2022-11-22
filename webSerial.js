@@ -36,25 +36,16 @@ async function printOut_L42DT(){
     })
 }
 
+var inputDone = null, reader = null, inputStream = null, portBalanca
 //---- Balanca ----
 async function readBalance(){
-  var inputDone = null, reader = null, inputStream = null, portOpen = false
+  portOpen = false
   const ports = await navigator.serial.getPorts();
-  console.log(ports)
+  //console.log(ports)
   ports.forEach(async (device) => {
     var {usbProductId, usbVendorId} = device.getInfo();
     if((usbProductId == '24577') && (usbVendorId == '1027')){ //productId e vendorId da balanca (cei-nlad-48470)
-      const portBalanca = device;
-
-      if(inputStream){
-        await reader.cancel()
-        await inputDone.catch(() => {})
-        reader = null
-        inputDone = null
-        await portBalanca.close();
-        portBalanca = null;
-      }
-
+      portBalanca = device;     
       await portBalanca.open({ baudRate: 9600, bufferSize: 4096})
       .then(() => {
         const decoder = new TextDecoderStream()
@@ -64,20 +55,16 @@ async function readBalance(){
         portOpen = true
       })
       .catch(async () => {
-        console.log("Erro open.")
-      })
-      
+        console.log("Erro To Open.")
+      })     
       var valueFull = ""
       var stringValor = ""
       var valorReal = ""
       if(portOpen){
         while(true){
           var { value, done } = await reader.read()            
-          if(done){
-            break
-          }
+          if(done) break
           //value é uma string
-          console.log("Aqui")
           valueFull+=value
           if(valueFull.indexOf("\r\n") != -1){
             function checkSum(msg){
@@ -97,10 +84,20 @@ async function readBalance(){
               console.log(valorReal)
             }
             valueFull=""
-            return valorReal //Retorna valor lido (number)
+            break//return valorReal //Retorna valor lido (number)
           }
         }
+      }
+      if(inputStream){
+        await reader.cancel()
+        await inputDone.catch(() => {valorReal})
+        reader = null
+        inputDone = null
+        await portBalanca.close();
+        portBalanca = null;
       }
     }
   })
 }
+
+setInterval(readBalance, 1000);
