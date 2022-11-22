@@ -100,6 +100,5 @@ async function readBalance(){
     }
   })
 }
-document.getElementById('valor')
 setInterval(readBalance, 700);
 //setInterval(printOut_L42DT, 8000);
