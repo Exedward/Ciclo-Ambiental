@@ -64,19 +64,9 @@ async function readBalance(){
         portOpen = true
       })
       .catch(async () => {
-        await portBalanca.open({ baudRate: 9600, bufferSize: 4096})
-        .then(() => {
-          const decoder = new TextDecoderStream()
-          inputDone = portBalanca.readable.pipeTo(decoder.writable)
-          inputStream = decoder.readable
-          reader = inputStream.getReader()
-          portOpen = true
-        })
+        console.log("Erro open.")
       })
       
-
-      
-
       var valueFull = ""
       var stringValor = ""
       var valorReal = ""
@@ -107,7 +97,7 @@ async function readBalance(){
               console.log(valorReal)
             }
             valueFull=""
-            //return valorReal //Retorna valor lido (number)
+            return valorReal //Retorna valor lido (number)
           }
         }
       }
